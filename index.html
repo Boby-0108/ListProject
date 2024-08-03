@@ -1,11 +1,66 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=`, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            
+            $('#toggleButton').click(function() {
+                $('#content').toggle(); 
+            });
+
+            function setupCheckboxGroup(parentSelector, childSelector) {
+                const $parentCheckbox = $(parentSelector);
+                const $childCheckboxes = $(childSelector);
+
+                function updateParentCheckbox() {
+                    const anyChecked = $childCheckboxes.is(':checked');
+                    $parentCheckbox.prop('checked', anyChecked);
+                }
+                $parentCheckbox.change(function() {
+                    const isChecked = $(this).is(':checked');
+                    $childCheckboxes.prop('checked', isChecked);
+                });
+                $childCheckboxes.change(function() {
+                    updateParentCheckbox();
+                });
+                updateParentCheckbox();
+            }
+
+            setupCheckboxGroup('#parentCheckbox1', '.childCheckbox1');
+            setupCheckboxGroup('#parentCheckbox2', '.childCheckbox2');
+        });
+    </script>
+    <style>
+    </style>
 </head>
 <body>
     
+    <button id="toggleButton">Toggle Content</button>
+
+   
+    <div id="content">
+        <input type="checkbox" id="parentCheckbox1"> Colour
+
+        <ol class="a">
+            <li><input type="checkbox" class="childCheckbox1"> Green<br></li>
+            <li><input type="checkbox" class="childCheckbox1"> Red<br></li>
+            <li><input type="checkbox" class="childCheckbox1"> Yellow<br></li>
+        </ol> 
+
+        <input type="checkbox" id="parentCheckbox2"> Language
+
+        <ol class="A">
+            <li><input type="checkbox" class="childCheckbox2"> Java<br></li>
+            <li><input type="checkbox" class="childCheckbox2"> Python<br></li>
+            <li><input type="checkbox" class="childCheckbox2"> Javascript<br></li>
+        </ol> 
+    </div>
 </body>
 </html>
+
+
